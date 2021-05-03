@@ -13,6 +13,15 @@ namespace NovaCoop.ComputeInterest.API.Controllers
         [HttpGet("/calculajuros")]
         public async Task<IActionResult> InterestCalculation([FromQuery] decimal valorinicial, double meses)
         {
+            using var client = new System.Net.Http.HttpClient();
+            {
+                var request = new System.Net.Http.HttpRequestMessage();
+                request.RequestUri = new Uri("https://localhost:55002/taxaJuros");
+                var response = await client.SendAsync(request);
+                return Ok(await response.Content.ReadAsStringAsync());
+            }
+
+
             decimal finalValue;
             try
             {
